@@ -1,10 +1,11 @@
 import p5 from "node-p5";
 let c;
-
+export let imgCreated = false;
 export function TryGenFractal(externalCode){
     c = externalCode;
     console.log("recieved code "  + c);
     console.log("thank you mommy");
+    imgCreated = false;
     let p5Instance = p5.createSketch(sketch);
 }
 
@@ -188,7 +189,8 @@ class Instruction {
   }
   function ChangeHue(sketch, turtle, value){
       let val = value[0];
-      let newHue = (turtle.hue) + (val);
+      //console.log("got hue value to add: " + parseInt(val) + ", so the hue of " + parseInt(turtle.hue) + " will change to " + parseInt(parseInt(turtle.hue) + parseInt(val)));
+      let newHue = parseInt(parseInt(turtle.hue)) + (parseInt(val));
       while(newHue > 255)
         newHue -= 255;
       while(newHue < 0)
@@ -240,10 +242,9 @@ class Instruction {
           canvas = p.createCanvas(800, 800);
       }
       p.draw = () => {
-            let imgCreated = false;
           p.background(0);
           p.translate(p.width/2, p.height/2);
-          p.colorMode(p.HSB);
+          p.colorMode(p.HSB, 255, 255, 255, 255);
           p.angleMode(p.DEGREES);
   
           let turtle = new Turtle();

@@ -16,7 +16,7 @@ import * as frac from "./fractalgeneration.js";
 ////////////////////////////////////////////////////////////////////////////////////
 
 //let imgCreated = false;
-//let code; // = "LOOP 6 ! PEN T -90 F 300 T 90 B 30 PEN LOOP 36 A 100 ! LOOP 10 TXT Love T 36 ! T 90 B 10 ? HUE 1 END ? PEN F 20 PEN HUE 6 T 1 END ? PEN F 20 T 60 PEN END";
+let code; // = "LOOP 6 ! PEN T -90 F 300 T 90 B 30 PEN LOOP 36 A 100 ! LOOP 10 TXT Love T 36 ! T 90 B 10 ? HUE 1 END ? PEN F 20 PEN HUE 6 T 1 END ? PEN F 20 T 60 PEN END";
 Mockup();
 
 const M = new Mastodon({
@@ -46,15 +46,15 @@ stream.on("message", async (msg) => {
             }
             
             // CREATING IMAGE FROM CODE
-            imgCreated = false;
             console.log("trying to parse and create image");
-            let p5Instance = p5.createSketch(sketch);
+            //let p5Instance = p5.createSketch(sketch);
+            frac.TryGenFractal(code);
             
             let waitTimeInSeconds = 10;
             console.log("waiting " + waitTimeInSeconds + " seconds for image to be created");
             await setTimeout(waitTimeInSeconds * 1000);
 
-            if(!imgCreated){
+            if(!frac.imgCreated){
               console.log("something went wrong creating the sketch, parsing or saving the image");
               // TODO: reply something like "sorry, your code seems incorrect check it and try again";
               return;
@@ -106,7 +106,7 @@ async function Mockup(){
   let myMsg = []; 
   myMsg.data = [];
   myMsg.data.status = [];
-  myMsg.data.status.content = "blabla bla <tag> $CODE HUE 150 NGON 6 200";
+  myMsg.data.status.content = "mya mya mya $CODE LOOP 6 ! PEN T -90 F 300 T 90 B 30 PEN LOOP 36 A 100 ! LOOP 10 TXT Love T 36 ! T 90 B 10 ? HUE 6 END ? PEN F 20 PEN HUE 1 T 1 END ? PEN F 20 T 60 PEN END";
   code = ExtractCode(myMsg, "$CODE ");
   frac.TryGenFractal(code);
 }
